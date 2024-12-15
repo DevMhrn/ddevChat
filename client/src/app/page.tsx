@@ -3,17 +3,21 @@ import Footer from "@/components/base/Footer";
 import HeroSection from "@/components/base/HeroSection";
 import Navbar from "@/components/base/Navbar";
 import UserReviews from "@/components/base/UserReview";
+import { getServerSession } from "next-auth";
 
 import Image from "next/image";
+import { authOptions, CustomSession } from "./api/auth/[...nextAuth]/option";
 
 
 
-export default function Home() {
+export default async function Home() {
+  const session: CustomSession | null = await getServerSession(authOptions);
+  console.log("The session is",session);
   return (
     <div className="min-h-screen flex flex-col " suppressHydrationWarning >
       {/* Header */}
-      
-      <Navbar />
+
+      <Navbar user={session?.user} />
       {/* Hero Section */}
       <HeroSection />
 
