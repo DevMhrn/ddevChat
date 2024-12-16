@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
-import options from "./option";
+import NextAuth from "next-auth/next";
+import { authOptions } from "./option";
 
-const nextAuth = NextAuth(options);
+const nextAuth = NextAuth(authOptions);
 export { nextAuth as GET, nextAuth as POST };
 
 

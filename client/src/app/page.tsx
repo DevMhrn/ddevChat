@@ -6,7 +6,7 @@ import UserReviews from "@/components/base/UserReview";
 import { getServerSession } from "next-auth";
 
 import Image from "next/image";
-import { authOptions, CustomSession } from "./api/auth/[...nextAuth]/option";
+import { authOptions, CustomSession } from './api/auth/[...nextauth]/option';
 
 
 
