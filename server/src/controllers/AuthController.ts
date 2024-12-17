@@ -14,6 +14,7 @@ class AuthController{
                     email:body.email
                 }
             })
+            
             if(!findUser){
                 let findUser = await prisma.user.create({
                     data:body

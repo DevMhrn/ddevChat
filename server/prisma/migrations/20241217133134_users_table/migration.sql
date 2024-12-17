@@ -4,8 +4,8 @@ CREATE TABLE "users" (
     "name" VARCHAR(191) NOT NULL,
     "email" VARCHAR(191) NOT NULL,
     "provider" VARCHAR(100) NOT NULL,
-    "image" TEXT,
     "oauthId" TEXT NOT NULL,
+    "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
