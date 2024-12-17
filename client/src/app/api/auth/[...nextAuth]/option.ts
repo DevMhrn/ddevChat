@@ -74,7 +74,7 @@ export const authOptions: AuthOptions = {
     ],
 }
 
-console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
+// console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+// console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
 
 export default NextAuth(authOptions);
