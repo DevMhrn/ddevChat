@@ -28,6 +28,7 @@ class AuthController{
             }
             const token = jwt.sign(JWTPayload, process.env.JWT_SECRET as string, {expiresIn:"365d"});
             res.status(200).json({
+                success:true,
                 message:"Login Successfully",
                 
                 user:{
@@ -38,7 +39,7 @@ class AuthController{
             });
             return;
         }catch(error){  
-            res.status(500).json({message:"Something went wrong, Please try again later"});
+            res.status(500).json({success:false, message:"Something went wrong, Please try again later"});
             console.log(error);
             return;
         }

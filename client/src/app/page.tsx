@@ -10,9 +10,11 @@ import { authOptions, CustomSession } from './api/auth/[...nextauth]/option';
 
 
 
+
 export default async function Home() {
   const session: CustomSession | null = await getServerSession(authOptions);
   console.log("The session is",session);
+   
   return (
     <div className="min-h-screen flex flex-col " suppressHydrationWarning >
       {/* Header */}

@@ -16,11 +16,11 @@ class ChatGroupController{
 
             })
             
-            res.status(200).json({message:"Chat Group Fetched Successfully", data:groups});
+            res.status(200).json({success:true, message:"Chat Group Fetched Successfully", data:groups});
 
             return;
         } catch (error) {
-            res.status(500).json({message:"Internal Server Error"});
+            res.status(500).json({success:false, message:"Internal Server Error"});
             console.log(error);
             return;
             
@@ -40,11 +40,11 @@ class ChatGroupController{
                 }
             })
             
-            res.status(200).json({message:"All Chat Group Fetched Successfully", data:chatGroups});
+            res.status(200).json({success:true, message:"All Chat Group Fetched Successfully", data:chatGroups});
 
             return;
         } catch (error) {
-            res.status(500).json({message:"Internal Server Error"});
+            res.status(500).json({success:false, message:"Internal Server Error"});
             console.log(error);
             return;
             
@@ -65,11 +65,11 @@ class ChatGroupController{
                 }
             })
             
-            res.status(200).json({message:"Chat Group Created Successfully"});
+            res.status(200).json({success:true, message:"Chat Group Created Successfully"});
 
             return;
         } catch (error) {
-            res.status(500).json({message:"Internal Server Error"});
+            res.status(500).json({success:false, message:"Internal Server Error"});
             console.log(error);
             return;
             
@@ -94,11 +94,11 @@ class ChatGroupController{
                 }
             })
             
-            res.status(200).json({message:"Chat Group Updated Successfully"});
+            res.status(200).json({success:true, message:"Chat Group Updated Successfully"});
 
             return;
         } catch (error) {
-            res.status(500).json({message:"Internal Server Error"});
+            res.status(500).json({success:false, message:"Internal Server Error"});
             console.log(error);
             return;
             
@@ -118,11 +118,11 @@ class ChatGroupController{
 
             })
             
-            res.status(200).json({message:"Chat Group Deleted Successfully"});
+            res.status(200).json({success:true, message:"Chat Group Deleted Successfully"});
 
             return;
         } catch (error) {
-            res.status(500).json({message:"Internal Server Error"});
+            res.status(500).json({success:false, message:"Internal Server Error"});
             console.log(error);
             return;
             
