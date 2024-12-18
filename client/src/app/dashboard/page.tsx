@@ -12,15 +12,13 @@ async function dashboard() {
     console.log("The chat groups are",chatGroups);   
   return (
     
-    <div>
-        {/* <p>{JSON.stringify(session)}</p> */}
+    <div className="bg-gray-100 min-h-screen">
         <DashNav user={{ name: session?.user?.name || "?", image: session?.user?.image || "" }} />
-        <div className='container mx-auto p-6 mr-4'> 
-          <div className='flex justify-end mt-10'>
-            
+        <div className="container mx-auto p-6">
+          <div className="flex justify-end mt-10">
               <CreateChat user={session?.user!} />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
             {chatGroups.length > 0 &&
               chatGroups.map((item: any, index: any) => (   
                 <GroupChatCard group={item} key={index} user={session?.user!} />
