@@ -7,16 +7,25 @@ import Routes from "./route/index.js";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import { setupSocket }   from "./socket.js";
+import { createAdapter } from "@socket.io/redis-streams-adapter";
+import redis from "./config/redis.config.js";
+import { instrument } from '@socket.io/admin-ui'
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:3000", "https://admin.socket.io"],
+    credentials: true,
   },
+  adapter: createAdapter(redis)
 });
 
 setupSocket(io);
 
+instrument(io, {
+  auth: false,
+  mode: 'development'
+});
 
 
 // * Middleware
