@@ -5,3 +5,17 @@ type ChatGroupType = {
     passcode : string;
     createdAt : string;
 }
+type ChatGroupUserType = {
+    id : number;
+    name : string;
+    groupId : string;
+    createdAt : string;
+}
+type MessagesType = {
+    id : string;
+    groupId : string;
+    message : string;
+    createdAt : string;
+    name : string;
+    
+}

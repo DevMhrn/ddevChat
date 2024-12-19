@@ -12,8 +12,6 @@ class ChatGroupController{
                 where:{
                     id : id
                 }
-
-
             })
             
             res.status(200).json({success:true, message:"Chat Group Fetched Successfully", data:groups});
@@ -61,7 +59,7 @@ class ChatGroupController{
                 data:{
                     title : body.title,
                     passcode : body.passcode,
-                    userId : user.id , 
+                    userId : user.id, 
                 }
             })
             

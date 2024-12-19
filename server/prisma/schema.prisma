@@ -28,6 +28,7 @@ model ChatGroup {
   passcode   String       @db.VarChar(20)
   createdAt  DateTime     @default(now())
   groupUsers GroupUser[]
+  chats      Chats[]
 
   @@index([userId, createdAt])
   @@map("chat_groups")
@@ -41,6 +42,19 @@ model GroupUser {
   createdAt  DateTime  @default(now())
 
   @@map("group_users")
+}
+
+model Chats {
+  id         String    @id @default(uuid()) @db.Uuid
+  group      ChatGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId    String    @db.Uuid
+  message    String?
+  name       String
+  file       String?
+  createdAt  DateTime  @default(now())
+
+  @@index([createdAt])
+  @@map("chats")
 }
 
 

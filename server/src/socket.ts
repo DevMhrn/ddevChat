@@ -1,4 +1,5 @@
 import {Server, Socket} from "socket.io";
+import prisma from "./config/db.config.js";
 
 interface SocketWithRoom extends Socket {
     data: {
@@ -25,12 +26,17 @@ export function setupSocket(io: Server) {
         socket.join(socket.data.room);
         console.log("The Socket  connected...", socket.id);
         
-        socket.on("message", (data) =>{
+        socket.on("message", async (data) =>{
             console.log("Server Side Message:", data);
             // socket.broadcast.emit("message", data);
             //broadcast will not work here, because the socket is not in the room
             //to send message to the room, we need to use the room id
-            io.to(socket.data.room).emit("message", data);
+
+            //save the message to the database
+            const message = await prisma.chats.create({
+                data : data
+            });
+            socket.to(socket.data.room).emit("message", message);
 
         });
 
