@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { getSocket } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
+import { fetchChats } from "@/fetch/chatFetch";
+import { BASE_URL } from "@/lib/apiEndPoints";
 
 export default function Chats({
   group,
@@ -11,6 +13,31 @@ export default function Chats({
   oldMessages: Array<MessagesType> | [];
   chatUser?: ChatGroupUserType;
 }) {
+
+
+    // async function saveMessage(message: MessagesType) {
+    //     try {
+    //       const response = await fetch(BASE_URL + "/messages", {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(message),
+    //       });
+      
+    //       if (!response.ok) {
+    //         throw new Error('Failed to save message');
+    //       }
+      
+    //       // Optionally handle the response data
+    //       const data = await response.json();
+    //       console.log('Message saved:', data);
+    //     } catch (error) {
+    //       console.error('Error saving message:', error);
+    //     }
+    //   }
+
+
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Array<MessagesType>>(oldMessages);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -26,8 +53,48 @@ export default function Chats({
     };
     return socket.connect();
   }, [group.id]);
+// will use this kind , if have to save the data 
+//   useEffect(() => {
+//     const fetchChatHistory = async () => {
+//       const response = await fetchChats(group.id);
+//       setMessages(response);
+//     };
+  
+//     fetchChatHistory();
+  
+//     socket.on("message", (data: MessagesType) => {
+//       setMessages((prevMessages) => [...prevMessages, data]);
+//       scrollToBottom();
+//     });
+  
+//     return () => {
+//       socket.close();
+//     };
+//   }, [group.id, socket]);
 
-  useEffect(() => {
+//   const handleSubmit = async (event: React.FormEvent) => {
+//     event.preventDefault();
+  
+//     if (message.trim() === "") {
+//       return; // Don't send the message
+//     }
+//     const payload: MessagesType = {
+//       id: uuidv4(),
+//       message: message,
+//       name: chatUser?.name ?? "Unknown",
+//       createdAt: new Date().toISOString(),
+//       groupId: group.id,
+//     };
+  
+//     socket.emit("message", payload);
+//     setMessage("");
+  
+//     // Save the message to the backend
+//     await saveMessage(payload);
+  
+//     setMessages([...messages, payload]);
+//   };
+useEffect(() => {
     // Load messages from localStorage on mount
     const savedMessages = localStorage.getItem(`chat-${group.id}`);
     if (savedMessages) {
@@ -48,31 +115,33 @@ export default function Chats({
       socket.close();
     };
   }, [group.id, socket]);
-
+  
   const handleSubmit = (event: React.FormEvent) => {
-  event.preventDefault();
-
-  if (message.trim() === "") {
-    return; // Don't send the message
-  }
-  const payload: MessagesType = {
-    id: uuidv4(),
-    message: message,
-    name: chatUser?.name ?? "Unknown",
-    createdAt: new Date().toISOString(),
-    groupId: group.id,
+    event.preventDefault();
+  
+    if (message.trim() === "") {
+      return; // Don't send the message
+    }
+    const payload: MessagesType = {
+      id: uuidv4(),
+      message: message,
+      name: chatUser?.name ?? "Unknown",
+      createdAt: new Date().toISOString(),
+      groupId: group.id,
+    };
+  
+    socket.emit("message", payload);
+    setMessage("");
+  
+    setMessages((prevMessages) => {
+      const updatedMessages = [...prevMessages, payload];
+      // Save messages to localStorage
+      localStorage.setItem(`chat-${group.id}`, JSON.stringify(updatedMessages));
+      return updatedMessages;
+    });
   };
-
-  socket.emit("message", payload);
-  setMessage("");
-
-  setMessages((prevMessages) => {
-    const updatedMessages = [...prevMessages, payload];
-    // Save messages to localStorage
-    localStorage.setItem(`chat-${group.id}`, JSON.stringify(updatedMessages));
-    return updatedMessages;
-  });
-};
+  
+  
 
   return (
     <div className="flex flex-col h-[94vh] p-4">
