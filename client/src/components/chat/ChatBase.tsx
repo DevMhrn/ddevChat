@@ -5,9 +5,12 @@ import { getSocket } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "../ui/button";
 
-export default function ChatBase() {
+export default function ChatBase({ groupId }: { groupId: string }) {
     const socket = useMemo(() => {
         const socketInstance = getSocket();
+        socketInstance.auth= {
+            room: groupId,
+        };
         return socketInstance.connect();
     }, []);
 

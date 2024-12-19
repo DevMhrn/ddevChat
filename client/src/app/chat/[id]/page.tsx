@@ -8,7 +8,7 @@ async function Chat({params}: {params: {id: string}}) {
     
     <div>
       Chat
-      <ChatBase />
+      <ChatBase groupId={id} />
     </div>
   )
 }
