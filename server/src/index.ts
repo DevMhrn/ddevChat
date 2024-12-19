@@ -4,6 +4,20 @@ import cors from "cors";
 const app: Application = express();
 const PORT = process.env.PORT || 7000;
 import Routes from "./route/index.js";
+import { Server } from "socket.io";
+import { createServer } from "http";
+import { setupSocket }   from "./socket.js";
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+  },
+});
+
+setupSocket(io);
+
+
 
 // * Middleware
 app.use(cors());
@@ -15,4 +29,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 app.use('/api', Routes);
 
-app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
+httpServer.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
+
+
+export { io };
+
+
